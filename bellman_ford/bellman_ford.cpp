@@ -1,7 +1,4 @@
 #include <bits/stdc++.h>
-#include <string.h>
-#include <fstream>
-#include <iostream>
 using namespace std;
 
 typedef long long int lli;
@@ -41,67 +38,22 @@ lli bellman_ford(int source)
   return distances[vertex - 1];
 }
 
-int main(int argc, char const *argv[])
+int main()
 {
+  lli vertex, edges;
+  cin >> vertex >> edges;
 
-  // MENU
+  distances.resize(vertex + 1, MAX_INT);
+  graph.resize(vertex + 1);
 
-  int i;
-  for (i = 0; i < argc; i++)
+  lli source, destiny, cost;
+
+  for (int i = 0; i < edges; i++)
   {
-    if (strcmp(argv[i], "-h") == 0)
-    {
-      printf("Opções de execução:\n\n-h --- help\n-o --- redirecionamento de saída\n");
-      printf("-f --- indicar arquivo de entrada\n-s --- saída ordenada crescente\n");
-      printf("-i --- indicar o vértice inicial\n-l --- indicar o vértice final\n");
-    }
-
-    if (strcmp(argv[i], "-o") == 0)
-    {
-      printf("%s\n", argv[i]);
-    }
-
-    if (strcmp(argv[i], "-f") == 0)
-    {
-      ifstream input_file("input.txt", ios::in);
-
-      lli vertex, edges;
-      cin >> vertex >> edges;
-
-      distances.resize(vertex + 1, MAX_INT);
-      graph.resize(vertex + 1);
-
-      lli source, destiny, cost;
-
-      while (!input_file.eof())
-      {
-        for (int i = 0; i < edges; i++)
-        {
-          cin >> source >> destiny >> cost;
-          graph[source].push_back(make_pair(cost, destiny));
-          graph[destiny].push_back(make_pair(cost, source));
-        }
-      }
-      input_file.close();
-    }
-
-    if (strcmp(argv[i], "-s") == 0)
-    {
-      printf("%s\n", argv[i]);
-    }
-
-    if (strcmp(argv[i], "-i") == 0)
-    {
-      printf("%s\n", argv[i]);
-    }
-
-    if (strcmp(argv[i], "-l") == 0)
-    {
-      printf("%s\n", argv[i]);
-    }
+    cin >> source >> destiny >> cost;
+    graph[source].push_back(make_pair(cost, destiny));
+    graph[destiny].push_back(make_pair(cost, source));
   }
-
-  // END
 
   cout << bellman_ford(1) << endl;
   return 0;
